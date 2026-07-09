@@ -64,4 +64,12 @@ def test_setup_logging_configures_root_logger() -> None:
     root_logger = logging.getLogger()
 
     assert root_logger.level == logging.DEBUG
-    assert len(root_logger.handlers) == 1
+
+    industrial_edge_handlers = [
+        handler
+        for handler in root_logger.handlers
+        if getattr(handler, "_industrial_edge_json_handler", False)
+    ]
+
+    assert len(industrial_edge_handlers) == 1
+    assert isinstance(industrial_edge_handlers[0].formatter, JsonLogFormatter)
