@@ -1,7 +1,6 @@
 # Industrial Edge Backend API
 
 ## Overview
-
 This is the backend API service for the Industrial Edge Monitoring Platform.
 
 The backend is built using Python and FastAPI and follows production-oriented backend engineering practices such as layered architecture, structured configuration, JSON logging, correlation IDs, request logging, global exception handling, security headers, automated tests, and Docker-based execution.
