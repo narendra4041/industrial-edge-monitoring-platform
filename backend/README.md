@@ -1,6 +1,7 @@
 # Industrial Edge Backend API
 
 ## Overview
+This service is currently in Milestone 1 backend foundation development.
 
 This is the backend API service for the Industrial Edge Monitoring Platform.
 
