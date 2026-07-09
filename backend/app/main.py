@@ -5,6 +5,7 @@ from fastapi import FastAPI
 from app.api.v1.api_router import api_router
 from app.core.config import get_settings
 from app.core.logging import setup_logging
+from app.core.middleware import CorrelationIdMiddleware
 
 
 logger = logging.getLogger(__name__)
@@ -19,6 +20,7 @@ def create_app() -> FastAPI:
         version="0.1.0",
     )
 
+    app.add_middleware(CorrelationIdMiddleware)
     app.include_router(api_router, prefix=settings.api_v1_prefix)
 
     logger.info(
