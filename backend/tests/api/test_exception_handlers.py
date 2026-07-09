@@ -1,3 +1,5 @@
+from typing import Annotated
+
 from fastapi import Body
 from fastapi.testclient import TestClient
 from pydantic import BaseModel
@@ -81,7 +83,7 @@ def test_request_validation_error_returns_standard_error_response() -> None:
     app = create_app()
 
     @app.post("/test/request-validation")
-    def validate_payload(payload: SamplePayload = Body(...)) -> dict[str, str]:
+    def validate_payload(payload: Annotated[SamplePayload, Body()]) -> dict[str, str]:
         return {"name": payload.name}
 
     client = TestClient(app)

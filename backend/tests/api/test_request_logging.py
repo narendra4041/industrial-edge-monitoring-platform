@@ -20,9 +20,7 @@ def test_request_logging_includes_request_details(caplog) -> None:
     assert response.status_code == 200
 
     matching_logs = [
-        record
-        for record in caplog.records
-        if record.getMessage() == "HTTP request completed"
+        record for record in caplog.records if record.getMessage() == "HTTP request completed"
     ]
 
     assert len(matching_logs) == 1

@@ -13,7 +13,6 @@ from app.core.exceptions import (
     ValidationError,
 )
 
-
 logger = logging.getLogger(__name__)
 
 

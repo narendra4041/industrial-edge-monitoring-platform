@@ -6,7 +6,6 @@ from uuid import uuid4
 from fastapi import Request, Response
 from starlette.middleware.base import BaseHTTPMiddleware
 
-
 CORRELATION_ID_HEADER = "X-Correlation-ID"
 
 logger = logging.getLogger(__name__)
@@ -58,7 +57,8 @@ class RequestLoggingMiddleware(BaseHTTPMiddleware):
         )
 
         return response
-    
+
+
 class SecurityHeadersMiddleware(BaseHTTPMiddleware):
     """Add basic security headers to every API response."""
 

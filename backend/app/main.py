@@ -18,7 +18,6 @@ from app.core.middleware import (
     SecurityHeadersMiddleware,
 )
 
-
 logger = logging.getLogger(__name__)
 
 
