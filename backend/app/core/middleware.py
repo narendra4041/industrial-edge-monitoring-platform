@@ -58,3 +58,17 @@ class RequestLoggingMiddleware(BaseHTTPMiddleware):
         )
 
         return response
+    
+class SecurityHeadersMiddleware(BaseHTTPMiddleware):
+    """Add basic security headers to every API response."""
+
+    async def dispatch(self, request: Request, call_next: Callable) -> Response:
+        response = await call_next(request)
+
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        response.headers["X-Frame-Options"] = "DENY"
+        response.headers["X-XSS-Protection"] = "0"
+        response.headers["Referrer-Policy"] = "no-referrer"
+        response.headers["Permissions-Policy"] = "geolocation=(), microphone=(), camera=()"
+
+        return response

@@ -12,7 +12,11 @@ from app.core.exception_handlers import (
 )
 from app.core.exceptions import ApplicationError
 from app.core.logging import setup_logging
-from app.core.middleware import CorrelationIdMiddleware, RequestLoggingMiddleware
+from app.core.middleware import (
+    CorrelationIdMiddleware,
+    RequestLoggingMiddleware,
+    SecurityHeadersMiddleware,
+)
 
 
 logger = logging.getLogger(__name__)
@@ -27,6 +31,7 @@ def create_app() -> FastAPI:
         version="0.1.0",
     )
 
+    app.add_middleware(SecurityHeadersMiddleware)
     app.add_middleware(RequestLoggingMiddleware)
     app.add_middleware(CorrelationIdMiddleware)
 
