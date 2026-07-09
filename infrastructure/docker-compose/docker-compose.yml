@@ -1,0 +1,51 @@
+services:
+  backend-api:
+    build:
+      context: ../../backend
+      dockerfile: Dockerfile
+    container_name: industrial-edge-backend-api
+    environment:
+      APP_NAME: "Industrial Edge Monitoring Platform API"
+      APP_ENV: "local"
+      API_V1_PREFIX: "/api/v1"
+      LOG_LEVEL: "INFO"
+      DATABASE_URL: "postgresql+psycopg://edge_user:edge_password@timescaledb:5432/industrial_edge"
+      JWT_SECRET_KEY: "change-me-for-local-development"
+      JWT_ALGORITHM: "HS256"
+      ACCESS_TOKEN_EXPIRE_MINUTES: "30"
+      DEVICE_API_KEY_HEADER: "X-Device-Api-Key"
+      ENABLE_METRICS: "true"
+      ENABLE_TRACING: "false"
+    ports:
+      - "8000:8000"
+    depends_on:
+      timescaledb:
+        condition: service_healthy
+    networks:
+      - industrial-edge-network
+
+  timescaledb:
+    image: timescale/timescaledb:latest-pg16
+    container_name: industrial-edge-timescaledb
+    environment:
+      POSTGRES_USER: edge_user
+      POSTGRES_PASSWORD: edge_password
+      POSTGRES_DB: industrial_edge
+    ports:
+      - "5432:5432"
+    volumes:
+      - industrial_edge_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U edge_user -d industrial_edge"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - industrial-edge-network
+
+volumes:
+  industrial_edge_pgdata:
+
+networks:
+  industrial-edge-network:
+    driver: bridge
